@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+    }
+    .calculator {
+        background-color: #fff;
+        width: 300px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .calculator input[type="text"] {
+        width: 100%;
+        height: 50px;
+        font-size: 24px;
+        text-align: right;
+        border: none;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .calculator button {
+        width: 23%;
+        height: 60px;
+        font-size: 24px;
+        margin: 1%;
+        border: none;
+        border-radius: 10px;
+        background-color: #e0e0e0;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+    .calculator button:hover {
+        background-color: #d0d0d0;
+    }
+    .calculator button.operation {
+        background-color: #f9a825;
+        color: #fff;
+    }
+    .calculator button.operation:hover {
+        background-color: #f57f17;
+    }
+    .calculator button.equals {
+        background-color: #4caf50;
+        color: #fff;
+    }
+    .calculator button.equals:hover {
+        background-color: #388e3c;
+    }
+    .calculator button.clear {
+        background-color: #d32f2f;
+        color: #fff;
+    }
+    .calculator button.clear:hover {
+        background-color: #c62828;
+    }
+</style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" readonly>
+        <br>
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button onclick="appendOperator('%')">%</button>
+        <button class="operation" onclick="appendOperator('/')">/</button>
+        <button class="operation" onclick="appendOperator('*')">*</button>
+        <button class="operation" onclick="appendOperator('-')">-</button>
+        <button class="operation" onclick="appendOperator('+')">+</button>
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button onclick="appendNumber('0')" style="width: 48%;">0</button>
+        <button onclick="appendOperator('.')">.</button>
+        <button onclick="deleteLast()">DEL</button>
+        <button class="equals" onclick="calculateResult()">=</button>
+    </div>
+    
+<script>
+    let display = document.getElementById('display');
+    
+    function clearDisplay() {
+        display.value = '';
+    }
+
+    function deleteLast() {
+        display.value = display.value.slice(0, -1);
+    }
+
+    function appendNumber(number) {
+        display.value += number;
+    }
+
+    function appendOperator(operator) {
+        const lastChar = display.value[display.value.length - 1];
+        if (lastChar && '*/-+.%'.includes(lastChar)) {
+            display.value = display.value.slice(0, -1) + operator;
+        } else {
+            display.value += operator;
+        }
+    }
+
+    function calculateResult() {
+        try {
+            display.value = eval(display.value);
+        } catch {
+            display.value = 'Error';
+        }
+    }
+</script>
+</body>
+</html>
